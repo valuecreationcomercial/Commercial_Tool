@@ -1,4 +1,4 @@
-name: IceStar
+name: base
 channels:
   - defaults
 dependencies:
