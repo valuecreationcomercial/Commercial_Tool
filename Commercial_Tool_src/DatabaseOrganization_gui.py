@@ -335,11 +335,11 @@ while True:  # Event Loop
             #window.refresh() if window else None
             # Pipeline Database
             print("Reading Pipeline Database")
-            #window.refresh() if window else None
+            window.refresh() if window else None
             arq_p = pd.ExcelFile('Databases/Pipeline_Database_CRM.xlsx')
             dpip= pd.read_excel(arq_p,"Pipeline Database")
             dpip['Operation Beginning Month'] = pd.DatetimeIndex(dpip['Operation Beginning Date']).month
-            dpip['Operation Beginning Day'] = pd.DatetimeIndex(dpip['Operation Beginning Date']).weekday
+            dpip['Operation Beginning Day'] = pd.DatetimeIndex(dpip['Operation Beginning Date']).day
             dpip['Operation Beginning Year'] = pd.DatetimeIndex(dpip['Operation Beginning Date']).year
             dpip.rename(columns={'Account Name (Client)':'Client'},inplace=True)
             colunas = dpip.columns
@@ -358,17 +358,21 @@ while True:  # Event Loop
                             i=mes
                             count=0
                             mrange= monthrange(currentYear,mes)
+                            valor_inicial = valor
                             if dia>1:
-                                valor = valor/mrange[1]*(mrange[1]-dia)
+                                valor_inicial = valor/mrange[1]*(mrange[1]-dia)
                             while i <=12:
                                 if count > dur:
                                     break
-                                dpip.loc[(dpip.Client==c),i]= valor
+                                if i == mes:
+                                    dpip.loc[(dpip.Client==c),i]= valor_inicial
+                                else:
+                                    dpip.loc[(dpip.Client==c),i]= valor
                                 i+=1
                                 count+=1
                 except:
                     print(c)
-                    #window.refresh() if window else None        
+                    window.refresh() if window else None        
             dpip=dpip.melt(id_vars=colunas, var_name="Mes", value_name="Total")
             dpip['Total'] = dpip['Total'].astype(float)
             dpipservs= pd.read_excel(arq_p,sheet_name="Data Validation")
@@ -388,8 +392,8 @@ while True:  # Event Loop
             dpip = dpip.melt(id_vars=['Facility',"Client",'Client_Code','GroupCode', "Mes","Type","ContractType", 'Segment','Sales Pipeline Stages','Probability (edit)','Operation Beginning Date','Opportunity Opening Date'], var_name="Service", value_name="Total")
             dpip.rename(columns={'Client': 'Client_Name'}, inplace=True)
             dpip.rename(columns={'ContractType': 'Client_Type'}, inplace=True)
-            #dpip.to_excel("Databases/BIinputs/Pipeline_Database.xlsx",index=False)
             dpip = dpip[['Facility',"Client_Name","Client_Code","GroupCode", "Mes","Type","Client_Type", 'Segment','Service','Total']]
+            #dpip.to_csv("Databases/BIinputs/Pipeline_Database.csv",index=False)
             # Final Database
             dprojfinal=dproj[['Client_Code','STORAGE','HANDLING','OTHERS','BLAST FREEZING','Mes','Type',"Facility","ContractType"]]
             dprojfinal = dprojfinal.fillna(0)
