@@ -91,7 +91,6 @@ dependencies:
   - zlib=1.2.13=h5eee18b_0
   - zstandard=0.19.0=py312h5eee18b_0
   - zstd=1.5.5=hc292b87_0
-  - pip==24.0
   - pip:
       - cryptography==41.0.4
 prefix: /opt/conda
