@@ -18,6 +18,8 @@ pyz = PYZ(a.pure)
 exe = EXE(
     pyz,
     a.scripts,
+    a.binaries,
+    a.datas,
     [],
     exclude_binaries=False,
     name='Commercial_Tool',
