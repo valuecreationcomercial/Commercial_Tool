@@ -118,7 +118,6 @@ lazy_loader==0.3
 lazy-object-proxy==1.6.0
 lckr_jupyterlab_variableinspector==3.1.0
 libarchive-c==2.9
-libmambapy==1.5.6
 linkify-it-py==2.0.0
 llvmlite==0.42.0
 lmdb==1.4.1
