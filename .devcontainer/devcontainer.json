@@ -6,7 +6,7 @@
 		"context": "..",
 		"dockerfile": "Dockerfile"
 	},
-
+	
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
