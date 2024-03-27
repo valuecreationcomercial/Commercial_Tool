@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +22,33 @@ jobs:
         name: Commercial_Tool
         path: Commercial_Tool_src/dist/windows
 
-    - name: Release
-      uses: softprops/action-gh-release@v2
+  create-release:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    - uses: actions/download-artifact@v2
       with:
-        files: Commercial_Tool_src/dist/windows/Commercial_Tool.exe
+        path: ./
+
+    - name: Create github release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: Release Version ${{ github.run_number }}
+        draft: false
+        prerelease: false
+
+    - name: Upload windows artifact to github release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./Commercial_Tool.exe
+        asset_name: Commercial_Tool.exe
+        asset_content_type: application
+      
