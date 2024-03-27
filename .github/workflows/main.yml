@@ -19,7 +19,7 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: Commercial_Tool
+        name: Commercial_Tool.exe
         path: Commercial_Tool_src/dist/windows
 
   create-release:
@@ -44,9 +44,8 @@ jobs:
 
     - name: Upload windows artifact to github release
       uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
       with:
+        GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./Commercial_Tool.exe
         asset_name: Commercial_Tool.exe
