@@ -14,7 +14,6 @@ a = Analysis(
     noarchive=False,
 )
 pyz = PYZ(a.pure)
-
 exe = EXE(
     pyz,
     a.scripts,
