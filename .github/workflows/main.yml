@@ -2,9 +2,8 @@ name: Package Application with Pyinstaller
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -21,7 +20,7 @@ jobs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: Commercial_Tool.zip
+        name: Commercial_Tool
         path: Commercial_Tool_src/dist/windows
 
     - name: Release
