@@ -28,12 +28,12 @@ jobs:
     needs: build
 
     steps:
+      - name: "Build & test"
+        run: echo "done!"
+        
       - uses: actions/download-artifact@v4
         with:
           path: ./
-
-      - name: "Build & test"
-        run: echo "done!"
 
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
