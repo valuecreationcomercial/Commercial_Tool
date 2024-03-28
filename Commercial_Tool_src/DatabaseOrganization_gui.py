@@ -38,7 +38,7 @@ while True:  # Event Loop
         arq= pd.ExcelFile('Databases/'+ str(currentYear) + "_Commercial_Tool_Database.xlsm")
         # General Input Database 
         print("Reading Commercial Inputs Database")
-        #window.refresh() if window else None
+        window.refresh() if window else None
         sheets= ["Budget","Forecast3+9","Forecast6+6","Forecast9+3","ACT_"+str(currentYear),"LY_"+str(currentYear-1)]
         dbs=[]
         for s in sheets:
@@ -49,7 +49,7 @@ while True:  # Event Loop
         if not values['FY_v']:
             # Projection Database
             print("Starting Projection calculation")
-            #window.refresh() if window else None
+            window.refresh() if window else None
             dclientes= pd.read_excel(arq,'Icestar_Clients') # Clientes
             dproj= pd.read_excel(arq,'Volumes_Projection')
             dprojservs= pd.read_excel(arq,'Services_List')
@@ -74,14 +74,14 @@ while True:  # Event Loop
             Storage_Types_Dict={"Frozen":"Storage Frozen","Refrigerated":"Storage Refrigerated","Dry":"Storage Dry"}
             for f in dproj.Facility.unique():
                 print(f)
-                #window.refresh() if window else None
+                window.refresh() if window else None
                 for stt in Storage_Types:
                     PromedioMT= "PromedioM_"+ stt
                     SaldoS= "Balance(" + stt +")"
                     print('Gathering', stt, 'data for months: ', end = " ")
                     for m in meses:
                         print(m, end = " ")
-                        #window.refresh() if window else None
+                        window.refresh() if window else None
                         for c in clientes:
                             dpm= dproj[(dproj.Facility == f)&(dproj.Mes == m) & (dproj.Client_Code ==c)]
                             dproj.loc[(dproj.Facility == f)&(dproj.Mes == m) & (dproj.Client_Code ==c), PromedioMT] = dpm[(dpm.Mes == m )][SaldoS].mean()
@@ -113,7 +113,7 @@ while True:  # Event Loop
             m=1
             for f in dftp.Facility.unique():
                 print('Running storage calculation for:',f)
-                #window.refresh() if window else None
+                window.refresh() if window else None
                 for stt in Storage_Types:
                     PromedioMT = "PromedioM_"+ stt
                     IngressosT = "Ingressos($)_"+ stt
@@ -332,7 +332,7 @@ while True:  # Event Loop
             dprojteste["Type"]="YTG"
             dproj = dprojteste.copy()
             print("Projection calculation Finished")
-            #window.refresh() if window else None
+            window.refresh() if window else None
             # Pipeline Database
             print("Reading Pipeline Database")
             window.refresh() if window else None
@@ -430,9 +430,9 @@ while True:  # Event Loop
             today = date.today()
             dfinal.to_excel("Databases/BIinputs/old/IceStar_Commercial_Database_"+str(currentYear)+"_"+str(currentMonth)+"_"+str(today)+".xlsx",index=False)
             print("Database Ready --> Refresh Power BI")
-            #window.refresh() if window else None
+            window.refresh() if window else None
             print("You can exit now")
-            #window.refresh() if window else None
+            window.refresh() if window else None
         else:
             if currentMonth == 12:
                 dfinal.rename(columns={'Month': "Mes"}, inplace=True)
@@ -458,12 +458,12 @@ while True:  # Event Loop
                 today = date.today()
                 dfinal.to_excel("Databases/BIinputs/old/IceStar_Commercial_Database_"+str(currentYear)+"_"+str(currentMonth)+"_"+str(today)+".xlsx",index=False)
                 print("Database Ready --> Refresh Power BI")
-                #window.refresh() if window else None
+                window.refresh() if window else None
                 print("You can exit now")
-                #window.refresh() if window else None
+                window.refresh() if window else None
             else:
                 print("You can only run for month 12")
-                #window.refresh() if window else None
+                window.refresh() if window else None
         #-------------------------------------------------------------------- Test Code -------------------------------------------------------
 
 window.close()
